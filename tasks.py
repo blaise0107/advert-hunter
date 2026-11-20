@@ -847,6 +847,34 @@ def scan_history(max_pages=None, wanted=None):
         return None
 
 
+def confirm_in_active(order, budget_s=20):
+    """Постфактум-подтверждение неопределённого исхода (предложение Qwen 4 MAX).
+
+    unknown — это не исход, а незавершённый вопрос: заказ либо в «Активных»
+    (значит взят), либо нет. Вызывается, когда NAV_TAB ACTIVE уже выполнен.
+    Возвращает True, если номер найден в списке «Активных». Неполный скан
+    (страница не открылась) → False с пометкой «не подтверждено», чтобы не
+    превратить неизвестность в ложное unavailable. Хелпер НЕ включается в
+    горячий путь: вызов под флагом strategy.confirm_unknown.enabled (по
+    умолчанию выключен).
+    """
+    end = time.monotonic() + budget_s
+    page = 1
+    incomplete = False
+    while time.monotonic() < end:
+        kind, a, path, lines = h.read_screen("cf.png")
+        if h.is_active_list(lines, a) or is_active_screen(kind, a):
+            cards = active_cards(a, lines)
+            if any(h.order_matches(order, c["order"]) for c in cards):
+                return True
+            page += 1
+            if not go_to_page(page, timeout=6):
+                incomplete = True
+                break
+        time.sleep(0.5)
+    return False
+
+
 def locate(order, max_pages=None):
     """Ищет заказ заново и возвращает карточку с актуальными координатами.
 
