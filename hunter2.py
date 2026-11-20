@@ -1071,7 +1071,9 @@ ORDER_RE = ["заказ", "ваказ", "закаэ", "3аказ", "закaз"]
 
 
 def norm(s):
-    return s.lower().replace("ё", "е")
+    # Одна реализация в core.shared (Qwen Q2.1): правимorting здесь,
+    # чтобы не расползлись две копии norm.
+    return _shared.norm(s)
 
 
 def is_order_header(line):
@@ -1926,7 +1928,6 @@ def accept_uninstall_dialog(a, lines, text):
 
 def retry_hold_dialog(a, lines, text):
     """Недодержка: закрывает предупреждение, снова открывает приложение и держит срок."""
-    global LAST_HELD_PKG
     pkg = LAST_HELD_PKG
     close_modal(a, lines)
     if not pkg:

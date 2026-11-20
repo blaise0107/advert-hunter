@@ -87,8 +87,18 @@ def page_state(buttons):
 
 
 def go_to_page(target, timeout, dev, screen_ok, scroll_when, buttons_fn=None):
+    """Переход на страницу пагинации.
+
+    dev — переходный контракт устройства (будущий core.Device). Обязательные
+    методы: read_screen(name) -> (kind, a, path, lines), tap(x, y),
+    swipe(x1, y1, x2, y2, duration). Зафиксировано явно, чтобы рефакторинг
+    «кольцо импортов -> device-слой» имел готовый протокол, а не археологию.
+    """
     buttons_fn = buttons_fn or page_buttons
-    end = time.monotonic(); last_tap = 0.0; last_scroll = 0.0
+    # Qwen прислал здесь end = time.monotonic() без '+ timeout' — цикл
+    # сразу завершался и go_to_page всегда возвращал False. Исправлено.
+    end = time.monotonic() + timeout
+    last_tap = 0.0; last_scroll = 0.0
     while time.monotonic() < end:
         kind, a, path, lines = dev.read_screen("pg.png")
         if screen_ok(kind, a):

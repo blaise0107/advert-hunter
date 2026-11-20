@@ -682,7 +682,6 @@ def pick_plan(settings):
     active = strategy.get("active") or "auto"
     if active != "auto" and active in plans:
         return active, plans[active]
-    now = datetime.now().strftime("%H:%M:%S")
     for name, plan in plans.items():
         if not plan.get("enabled", True):
             continue

@@ -22,7 +22,6 @@ import shutil
 import subprocess
 import sys
 import time
-import urllib.parse
 from datetime import datetime, timedelta
 
 import numpy as np
@@ -860,7 +859,6 @@ def confirm_in_active(order, budget_s=20):
     """
     end = time.monotonic() + budget_s
     page = 1
-    incomplete = False
     while time.monotonic() < end:
         kind, a, path, lines = h.read_screen("cf.png")
         if h.is_active_list(lines, a) or is_active_screen(kind, a):
@@ -869,7 +867,7 @@ def confirm_in_active(order, budget_s=20):
                 return True
             page += 1
             if not go_to_page(page, timeout=6):
-                incomplete = True
+                # Неполное чтение:承保 unknown остаётся unknown (возвращаем False).
                 break
         time.sleep(0.5)
     return False
