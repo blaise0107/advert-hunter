@@ -365,6 +365,9 @@
           }
         ]
       }
+    },
+    "confirm_unknown": {
+      "enabled": true
     }
   }
 }

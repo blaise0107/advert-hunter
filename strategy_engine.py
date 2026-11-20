@@ -750,14 +750,13 @@ def run_once(dry_run=False):
     pending = queue_pending()
     if pending:
         log(f"в очереди {len(pending)} невыполненных — выполню после сбора «Новых»")
-    # Cleanup ПЕРЕД шагами: после рестарта процесса/фермы экран ещё в меню
-    # или «Активных». Раньше вызов стоял в конце — к тому моменту экран был
-    # в «Новых»/WAIT, и scan_active возвращал None/неполный список, из‑за чего
-    # guard корректно блокировал удаление, но завершённые заказы не удалялись.
+    # Cleanup — ПОСЛЕ шагов, чтобы он не крал время выполнений. Раньше он
+    # стоял здесь, в начале: 3 ретрая по 75 c съедали ~10 мин, и EXECUTE_ACTIVE
+    # не запускался (задания «пролистывались и не брались»). Теперь основные
+    # шаги идут первыми, а cleanup (с ретраями и ensure_menu внутри) — в конце
+    # прохода. Частота ограничена last_cleanup.txt (раз в CLEANUP_EVERY мин).
     ensure_app()
     modal_pump()
-    do_cleanup()
-    ensure_app()
     for i, step in enumerate(steps, 1):
         if STOP:
             break
@@ -798,6 +797,8 @@ def run_once(dry_run=False):
             log(traceback.format_exc())
             modal_pump()
     ensure_app()
+    # Cleanup в конце прохода: после основных шагов. Не блокирует выполнение.
+    do_cleanup()
     log(f"=== конец прохода; очередь: {queue_summary()} ===")
     return 0
 

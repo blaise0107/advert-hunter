@@ -882,8 +882,15 @@ def locate(order, max_pages=None):
     limit, _empty_stop = active_strategy()
     if max_pages is not None:
         limit = max_pages
+    # Список «Активных» часто открывается прокрученным в середину — тогда
+    # кнопки страниц не видны и page_state() даёт (1,1), из-за чего заказы
+    # со 2-й страницы («не найден при прокрутке») NEVER не находятся. Сбросим
+    # скролл вверх перед чтением page_state — как это делает scan_active().
+    h._scroll_top()
     kind, a, path, lines = h.read_screen("loc0.png")
-    if kind not in ("active", "list"):
+    if not is_active_screen(kind, a):
+        kind, a, path, lines = h.read_screen("loc0r.png")
+    if not is_active_screen(kind, a):
         return None
     current, total = page_state(a)
     for target in range(1, total + 1):
@@ -892,7 +899,7 @@ def locate(order, max_pages=None):
         current = target
         for page in range(limit):
             kind, a, path, lines = h.read_screen(f"loc{target}_{page}.png")
-            if kind not in ("active", "list"):
+            if not is_active_screen(kind, a):
                 return None
             for card in active_cards(a, lines):
                 if h.order_matches(order, card["order"]):
@@ -905,7 +912,7 @@ def locate(order, max_pages=None):
                         time.sleep(0.5)
                         kind, a, path, lines = h.read_screen(
                             f"loc{target}_{page}_lift{lift}.png")
-                        if kind not in ("active", "list"):
+                        if not is_active_screen(kind, a):
                             return None
                         found = next((c for c in active_cards(a, lines)
                                       if h.order_matches(order, c["order"])), None)
