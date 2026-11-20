@@ -1,0 +1,370 @@
+{
+  "version": 1,
+  "deadline": "08:30",
+  "target_balance": 150.0,
+  "min_withdraw": 150.0,
+  "commission": 50.0,
+  "theme": "light",
+  "accent": "#2ecc71",
+  "app_package": "",
+  "ocr": {
+    "engine": "rapid"
+  },
+  "hold_min_seconds": 85,
+  "cycle": {
+    "new_minutes": 12,
+    "active_minutes": 25,
+    "sleep_seconds": 30,
+    "active_first": true
+  },
+  "new": {
+    "max_pages": 1,
+    "allow_second_page": true,
+    "scroll_to_bottom": false,
+    "recheck_count": 2,
+    "recheck_delay": 10,
+    "open_wait_seconds": 75,
+    "sort_by_price": false,
+    "idle_stop_minutes": 8,
+    "blacklist_ttl_minutes": 360,
+    "max_offers_per_run": 0,
+    "empty_stop": 2
+  },
+  "active": {
+    "max_pages": 0,
+    "empty_stop": 2,
+    "hard_cap": 25,
+    "sort_by_price": true,
+    "order_by_stage": true,
+    "cleanup_confirmations": 2,
+    "cleanup_delay_minutes": 0,
+    "deadline_margin_hours": 24,
+    "open_wait_seconds": 75,
+    "retry_count": 2
+  },
+  "match": {
+    "icon_max_distance": 1.0,
+    "icon_margin": 0.75,
+    "hash_max_hamming": 4,
+    "shared_hamming": 20,
+    "id_over_icon": false,
+    "min_confidence": 0.55
+  },
+  "markets": [
+    "google",
+    "rustore",
+    "huawei",
+    "xiaomi"
+  ],
+  "forbidden": [
+    "samsung",
+    "vpn"
+  ],
+  "maintenance": {
+    "frames_max_age_minutes": 90,
+    "frames_max_files": 600,
+    "frames_max_mb": 250,
+    "log_max_mb": 2,
+    "log_keep": 10
+  },
+  "screen": {
+    "fps": 1,
+    "auto_stop": true
+  },
+  "farm": {
+    "max_parallel": 2,
+    "round_minutes": 15,
+    "techwait_seconds": 120,
+    "restart_delay_seconds": 30,
+    "disabled": []
+  },
+  "notify": {
+    "sound": false,
+    "telegram": false
+  },
+  "strategy": {
+    "active": "auto",
+    "hold_after_take_seconds": 80,
+    "done_cooldown_minutes": 40,
+    "plans": {
+      "rush": {
+        "name": "Ночной шквал (00:00–08:29)",
+        "enabled": true,
+        "from": "00:00:00",
+        "to": "08:29:59",
+        "steps": [
+          {
+            "id": "r1",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "note": "Модалки всегда (приоритет 0)",
+            "params": {
+              "repeat": 2
+            }
+          },
+          {
+            "id": "r2",
+            "enabled": true,
+            "kind": "NAV_TAB",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "note": "Открыть НОВЫЕ",
+            "params": {}
+          },
+          {
+            "id": "r3",
+            "enabled": true,
+            "kind": "SCAN_NEW",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "note": "Собрать RU; стоп после 2 заходов без RU",
+            "params": {
+              "empty_limit": 2,
+              "max_pages": 1,
+              "scroll_to_bottom": true
+            }
+          },
+          {
+            "id": "r4",
+            "enabled": true,
+            "kind": "TAKE_NEW",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "note": "Взять все RU в очередь",
+            "params": {
+              "max_tasks": 0
+            }
+          },
+          {
+            "id": "r5",
+            "enabled": true,
+            "kind": "EXECUTE_ACTIVE",
+            "tab": "ACTIVE",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "note": "Сразу выполнить взятое",
+            "params": {
+              "max_tasks": 0,
+              "only_due": true
+            }
+          },
+          {
+            "id": "r6",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "note": "Проверить модалки ещё раз",
+            "params": {}
+          }
+        ]
+      },
+      "day": {
+        "name": "Дневной (08:30–23:59)",
+        "enabled": true,
+        "from": "08:30:00",
+        "to": "23:59:59",
+        "steps": [
+          {
+            "id": "d0",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "note": "Модалки всегда (приоритет 0)",
+            "params": {}
+          },
+          {
+            "id": "d1",
+            "enabled": true,
+            "kind": "EXECUTE_ACTIVE",
+            "tab": "ACTIVE",
+            "from": "08:30:00",
+            "to": "23:59:59",
+            "note": "Сначала выполнить взятое",
+            "params": {
+              "max_tasks": 0,
+              "only_due": true
+            }
+          },
+          {
+            "id": "d2",
+            "enabled": true,
+            "kind": "NAV_TAB",
+            "tab": "NEW",
+            "from": "08:30:00",
+            "to": "23:59:59",
+            "note": "Открыть НОВЫЕ",
+            "params": {}
+          },
+          {
+            "id": "d3",
+            "enabled": true,
+            "kind": "SCAN_NEW",
+            "tab": "NEW",
+            "from": "08:30:00",
+            "to": "23:59:59",
+            "note": "Собрать RU; стоп после 3 заходов без RU",
+            "params": {
+              "empty_limit": 3,
+              "max_pages": 1,
+              "scroll_to_bottom": true
+            }
+          },
+          {
+            "id": "d4",
+            "enabled": true,
+            "kind": "TAKE_NEW",
+            "tab": "NEW",
+            "from": "08:30:00",
+            "to": "23:59:59",
+            "note": "Взять RU и сразу выполнить",
+            "params": {
+              "max_tasks": 0
+            }
+          },
+          {
+            "id": "d5",
+            "enabled": true,
+            "kind": "WAIT",
+            "tab": "",
+            "from": "08:30:00",
+            "to": "23:59:59",
+            "note": "Пауза 60 с (модалки опрашиваются)",
+            "params": {
+              "seconds": 60
+            }
+          }
+        ]
+      },
+      "urgent": {
+        "name": "Срочное: только модалки и сроки",
+        "enabled": true,
+        "from": "00:00:00",
+        "to": "23:59:59",
+        "steps": [
+          {
+            "id": "u1",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "note": "Модалки",
+            "params": {}
+          },
+          {
+            "id": "u2",
+            "enabled": true,
+            "kind": "EXECUTE_ACTIVE",
+            "tab": "ACTIVE",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "note": "Только заказы с близким сроком",
+            "params": {
+              "max_tasks": 3,
+              "only_due": true
+            }
+          }
+        ]
+      },
+      "custom": {
+        "name": "Ночной шквал (00:00–08:29)",
+        "enabled": true,
+        "from": "00:00:00",
+        "to": "08:29:59",
+        "steps": [
+          {
+            "id": "s1",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "params": {
+              "repeat": 2
+            },
+            "note": "Модалки всегда (приоритет 0)"
+          },
+          {
+            "id": "s2",
+            "enabled": true,
+            "kind": "NAV_TAB",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "params": {},
+            "note": "Открыть НОВЫЕ"
+          },
+          {
+            "id": "s3",
+            "enabled": true,
+            "kind": "SCAN_NEW",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "12:29:59",
+            "params": {
+              "empty_limit": 2,
+              "max_pages": 1,
+              "scroll_to_bottom": true
+            },
+            "note": "Собрать RU; стоп после 2 заходов без RU"
+          },
+          {
+            "id": "s4",
+            "enabled": true,
+            "kind": "TAKE_NEW",
+            "tab": "NEW",
+            "from": "00:00:00",
+            "to": "10:29:59",
+            "params": {
+              "max_tasks": 0
+            },
+            "note": "Взять все RU в очередь"
+          },
+          {
+            "id": "s5",
+            "enabled": true,
+            "kind": "EXECUTE_ACTIVE",
+            "tab": "ACTIVE",
+            "from": "00:00:00",
+            "to": "08:29:59",
+            "params": {
+              "max_tasks": 0,
+              "only_due": true
+            },
+            "note": "Сразу выполнить взятое"
+          },
+          {
+            "id": "s6",
+            "enabled": true,
+            "kind": "MODAL_PUMP",
+            "tab": "",
+            "from": "00:00:00",
+            "to": "23:59:59",
+            "params": {},
+            "note": "Проверить модалки ещё раз"
+          },
+          {
+            "id": "s7",
+            "enabled": true,
+            "kind": "EXECUTE_ACTIVE",
+            "tab": "ACTIVE",
+            "from": "10:10:10",
+            "to": "10:20:10",
+            "params": {},
+            "note": ""
+          }
+        ]
+      }
+    }
+  }
+}

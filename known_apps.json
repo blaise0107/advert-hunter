@@ -1,0 +1,309 @@
+{
+  "orders": {
+    "833306": {
+      "package": "com.zaim.na.kartu.Lamb",
+      "component": "com.zaim.na.kartu.Lamb/com.vsezaimyonline.ui.screens.enter.EnterActivity",
+      "query": "Lamb",
+      "at": "2026-11-06T16:16:27"
+    },
+    "1391521": {
+      "package": "com.wn.football.sport.mobile",
+      "component": "com.wn.football.sport.mobile/com.w.football.sport.android.ui.MainActivity",
+      "query": "football",
+      "at": "2026-11-06T16:29:36"
+    },
+    "21444448": {
+      "package": "ru.greenmoney",
+      "component": "ru.greenmoney/.MainActivity",
+      "query": "greenmoney",
+      "at": "2026-11-05T20:58:42"
+    },
+    "1431597": {
+      "package": "com.TNITYStudio.BWCasino",
+      "component": "com.TNITYStudio.BWCasino/com.unity3d.player.UnityPlayerActivity",
+      "query": "BWCasino",
+      "at": "2026-11-06T23:45:26"
+    },
+    "1419982": {
+      "package": "com.uc.minigame.relax",
+      "component": null,
+      "query": "minigame.relax",
+      "at": "2026-11-05T21:24:59"
+    },
+    "1413107": {
+      "package": "com.zaimi.na.kartu.Henry",
+      "component": "com.zaimi.na.kartu.Henry/com.zaim.kartu.ui.activity.splash.SplashActivity",
+      "query": "Henry",
+      "at": "2026-11-07T10:49:00"
+    },
+    "1355325": {
+      "package": "com.next.foot.sport.mob",
+      "component": "com.next.foot.sport.mob/com.nextfoot.MainActivity",
+      "query": "mob",
+      "at": "2026-11-08T17:43:55"
+    },
+    "1435846": {
+      "package": "com.zvooq.openplay",
+      "component": "com.zvooq.openplay/com.zvooq.openplay.SplashAliasDefault",
+      "query": "openplay",
+      "at": "2026-11-06T00:29:00"
+    },
+    "1443285": {
+      "package": "com.apegroup.mcdonaldsrussia",
+      "query": "vkusno",
+      "at": "2026-11-06T00:54:11",
+      "source": "rustore-apkpure"
+    },
+    "1410517": {
+      "package": "com.zaymigo.zaymigo_loans",
+      "component": "com.zaymigo.zaymigo_loans/com.zaymigo.zaymigo_loans.MainActivity",
+      "query": "zaymigo_loans",
+      "at": "2026-11-08T17:18:26"
+    },
+    "1410398": {
+      "package": "com.google.android.gms",
+      "component": "com.google.android.gms/com.google.android.gms.auth.api.credentials.assistedsignin.ui.PhoneNumberHintActivity",
+      "query": "gms",
+      "at": "2026-11-06T14:22:15"
+    },
+    "1409790": {
+      "package": "com.zaim.na.kartu.Colombo",
+      "component": "com.zaim.na.kartu.Colombo/ru.greenlexhope.loan.ui.enter.EnterActivity",
+      "query": "Colombo",
+      "at": "2026-11-06T14:25:00"
+    },
+    "1179627": {
+      "package": "ru.pay_s.osago",
+      "component": "ru.pay_s.osago/ru.pay_s.osago.ui.main.MainActivity",
+      "query": "osago",
+      "at": "2026-11-06T14:27:55"
+    },
+    "1341301": {
+      "package": "com.wallbeststore.cat",
+      "component": "com.wallbeststore.cat/app.dengi.vdolg.debt.loan.debtloanonline.MainActivity",
+      "query": "cat",
+      "at": "2026-11-08T17:45:35"
+    },
+    "1425812": {
+      "package": "com.brenloris.sports.goalframe",
+      "component": "com.brenloris.sports.goalframe/com.brenloris.sports.goalframe.MainActivity",
+      "query": "goalframe",
+      "at": "2026-11-06T14:33:46"
+    },
+    "1354084": {
+      "package": "com.winline.delaet.raznicu.sport.stavki.gp.app",
+      "component": "com.winline.delaet.raznicu.sport.stavki.gp.app/com.winline.delaet.raznicu.sport.stavki.gp.app.MainActivity",
+      "query": "winline",
+      "at": "2026-11-06T14:37:31"
+    },
+    "1443138": {
+      "package": "com.fonbet.all.sport.and.stavki.app",
+      "component": "com.fonbet.all.sport.and.stavki.app/com.fonbet.all.sport.and.app.presentation.activity.MainActivity",
+      "query": "fonbet",
+      "at": "2026-11-06T14:41:29"
+    },
+    "1428895": {
+      "package": "com.olimpbk.app.bet",
+      "component": "com.olimpbk.app.bet/com.work.app.uiCore.base.MainActivity",
+      "query": "bet",
+      "at": "2026-11-06T14:51:55"
+    },
+    "990633": {
+      "package": "com.webbankir",
+      "component": "com.webbankir/com.webbankir.shared_app.new_classes.ui.splash.SplashScreenActivity",
+      "query": "webbankir",
+      "at": "2026-11-06T14:55:59"
+    },
+    "1444621": {
+      "package": "ru.vozmika",
+      "component": "ru.vozmika/ru.vozmika.MainActivity",
+      "query": "vozmika",
+      "at": "2026-11-06T15:11:54"
+    },
+    "1359127": {
+      "package": "com.fonbet.all.sport.and.stavki.app",
+      "component": "com.fonbet.all.sport.and.stavki.app/com.fonbet.all.sport.and.app.presentation.activity.MainActivity",
+      "query": "fonbet",
+      "at": "2026-11-06T15:42:22"
+    },
+    "1430506": {
+      "package": "com.zaim.online.bezotkaza",
+      "component": "com.zaim.online.bezotkaza/com.noty.loans.ui.screens.enter.StartActivity",
+      "query": "bezotkaza",
+      "at": "2026-11-08T17:35:15"
+    },
+    "1425509": {
+      "package": "com.zaimi.do.zp.finance",
+      "component": "com.zaimi.do.zp.finance/com.online.zaim.ui.enter.StartActivity",
+      "query": "finance",
+      "at": "2026-11-07T10:43:20"
+    },
+    "1422132": {
+      "package": "com.zaim.na.kartu.officialtechdock",
+      "component": "com.zaim.na.kartu.officialtechdock/com.online.zaim.nakartu.ui.StartActivity",
+      "query": "officialtechdock",
+      "at": "2026-11-07T10:46:11"
+    },
+    "1395670": {
+      "package": "com.fonbet.sport.app",
+      "component": "com.fonbet.sport.app/com.fonbet.sport.app.MainActivity",
+      "query": "fonbet",
+      "at": "2026-11-08T17:43:22"
+    },
+    "1421169": {
+      "package": "app.movetoplay.mtp",
+      "component": "app.movetoplay.mtp/app.movetoplay.mtp.mtpkmp.CombinedMainActivity",
+      "query": "mtp",
+      "at": "2026-11-07T10:58:12"
+    },
+    "1069571": {
+      "package": "ru.letu",
+      "component": "ru.letu/ru.letu.navigation.base.MainActivity",
+      "query": "letu",
+      "at": "2026-11-08T17:44:26"
+    },
+    "1431297": {
+      "package": "com.yandex.bank",
+      "component": "com.yandex.bank/com.yb.screens.MainActivityDefault",
+      "query": "bank",
+      "at": "2026-11-08T17:46:10"
+    },
+    "1395363": {
+      "package": "ru.ezaem.dozp.fast",
+      "component": "ru.ezaem.dozp.fast/ru.ezaem.dozp.fast.MainActivity",
+      "query": "fast",
+      "at": "2026-11-07T12:30:38"
+    },
+    "1416743": {
+      "package": "com.yandex.searchapp",
+      "component": "com.yandex.searchapp/com.yandex.browser.YandexBrowserMainActivity",
+      "query": "searchapp",
+      "at": "2026-11-08T17:45:00"
+    }
+  },
+  "icons": [
+    {
+      "hash": "2941d41a8b6e954ead72696c336c4f46db46ef003706712649324964e964d972",
+      "package": "com.uc.minigame.relax",
+      "query": "minigame.relax"
+    },
+    {
+      "hash": "b0e2af1a9f06b832e128cc64d26492c69cc28ce29fd28c10d9e2fe06a71a9062",
+      "package": "com.google.android.gms",
+      "query": "gms"
+    },
+    {
+      "hash": "a842a32ab4d2a96aa92aa96aa9d2a9d2b4aaae729212924e96b29dbaa252b882",
+      "package": "com.zaim.na.kartu.Colombo",
+      "query": "Colombo"
+    },
+    {
+      "hash": "8002a002a002a0028d2aa2d6cd2a8d6aab6ea84aacd8d322ac42a002a002a002",
+      "package": "com.brenloris.sports.goalframe",
+      "query": "goalframe"
+    },
+    {
+      "hash": "80067a01f800c00cd604cb14c9acc9cc89549bb686a686ee9b26c49cd004f000",
+      "package": "ru.pay_s.osago",
+      "query": "osago"
+    },
+    {
+      "hash": "8002a332acca9332a73a8e9e9d469a269a269a2e9cc6860ec33ea0fa9cc2a332",
+      "package": "com.olimpbk.app.bet",
+      "query": "bet"
+    },
+    {
+      "hash": "0228b1d63552b4531494b221b932b2c41089b319abadb3721252b319a9acb374",
+      "package": "com.fonbet.all.sport.and.stavki.app",
+      "query": "fonbet"
+    },
+    {
+      "hash": "000088de975eb536b15eb6a2ae56ad229cb695668e86932639462e326e0b1cda",
+      "package": "com.TNITYStudio.BWCasino",
+      "query": "BWCasino"
+    },
+    {
+      "hash": "80028002800280028226a1dab45a9526ba4ed012a55aa54a9a82800280028002",
+      "package": "com.zaim.na.kartu.officialtechdock",
+      "query": "officialtechdock"
+    },
+    {
+      "hash": "a71a90e2a71ace0c9026a1926e4a6d69654d494969aaa2529026cf0ca71a90e2",
+      "package": "com.zaimi.na.kartu.Henry",
+      "query": "Henry"
+    },
+    {
+      "hash": "8312b8e2817e9f02b4dab8dab33ab71292929036d8e68ceea6ca9332a96aa6d2",
+      "package": "app.movetoplay.mtp",
+      "query": "mtp"
+    },
+    {
+      "hash": "800080028c429332adcadaa4b362e598e4d2b366894aa49293228942a2828002",
+      "package": "com.webbankir",
+      "query": "webbankir"
+    },
+    {
+      "hash": "086106812d89594979490d81728979810ee10e61798170811e4126b110010401",
+      "package": "com.zaymigo.zaymigo_loans",
+      "query": "zaymigo_loans"
+    },
+    {
+      "hash": "086023095c8530f3611948edc1049514956c929cc00448ed601930f35e852309",
+      "package": "com.zaim.online.bezotkaza",
+      "query": "bezotkaza"
+    },
+    {
+      "hash": "a002a002a70aa8169016a00685aecb42cb5a8a5a881a96b296828c928d022d02",
+      "package": "com.fonbet.sport.app",
+      "query": "fonbet"
+    },
+    {
+      "hash": "a042a1a2a64ab872b03aa6daa4da849aa23aa1f2b982aaaa8a7a8cdab122a8d2",
+      "package": "com.next.foot.sport.mob",
+      "query": "mob"
+    },
+    {
+      "hash": "a002a002a002a002a042af02b0fae8f079d8970e8e86b172a002a002a002a002",
+      "package": "ru.letu",
+      "query": "letu"
+    },
+    {
+      "hash": "00010001000160c1020561e16cd16c99669966996c9971e30005249100010001",
+      "package": "com.wallbeststore.cat",
+      "query": "cat"
+    },
+    {
+      "hash": "6c03f7f8fffcf1f8fff8fe5ab1a68646ca5292569756b59ea5a29a1ad484e808",
+      "package": "com.yandex.bank",
+      "query": "bank"
+    },
+    {
+      "hash": "8002a882a3329f0ab8e6b0b2a452e71af19aa4dab652b3629c06af0ab072ae02",
+      "package": "com.zvooq.openplay",
+      "query": "openplay"
+    },
+    {
+      "hash": "ac22b0f29332a732a632a7329332a9b09136932ba729a8c6c234e00900024000",
+      "package": "com.yandex.searchapp",
+      "query": "searchapp"
+    },
+    {
+      "hash": "8c42af22a3d2bceac16a9a92356c656d62a765aa65aaba568daaa66a9dcaa392",
+      "package": "com.winline.delaet.raznicu.sport.stavki.gp.app",
+      "query": "winline"
+    },
+    {
+      "hash": "03a2032e05912399239e919c1591b39cc3931591019203350353019200680000",
+      "package": "ru.ezaem.dozp.fast",
+      "query": "fast"
+    }
+  ],
+  "ambiguous": [
+    "8c42af22a3d2bce0c56a9a92356c656d62a765aa65aaba568db2a26a9dcaa392",
+    "8c42af22a3d2bceac16a9a92356c656d62a765aa65aaba568daaa66a9dcaa392",
+    "00a205910b5a019e04b20190234d919310903510c37751930190031003770193",
+    "00a205910b5a019e04b20190234d919311923390c35f55930190033003770193",
+    "8c42af22a3d2bceac16a9a92356c656d62a765aa65aaba568daaa66a9dcaa392",
+    "8c42af22a3d2bce0c56a9a92356c656d62a765aa65aaba568db2a26a9dcaa392"
+  ]
+}

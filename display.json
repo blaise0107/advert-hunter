@@ -1,0 +1,15 @@
+{
+  "serial": "fab1701",
+  "original": {
+    "physical_size": "1080x2412",
+    "override_size": "",
+    "physical_density": "480",
+    "override_density": "408"
+  },
+  "saved_at": "2026-11-08T18:53:00",
+  "last_prepared_at": "2026-11-12T11:32:29",
+  "last_prepared": {
+    "size": "1080x2412",
+    "density": "408"
+  }
+}

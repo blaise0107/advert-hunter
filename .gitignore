@@ -1,0 +1,32 @@
+# Виртуальное окружение RapidOCR (~330 МБ с ONNX-моделями)
+.venv-ocr/
+
+# Логи, кадры и результаты работы (~380 МБ) — содержат номера заказов и скриншоты
+runs/
+logs/
+frames/
+shots/
+icon_cache/
+backups/
+
+# Состояние фермы и служебные файлы
+farm_status.json
+last_cleanup.txt
+*.out
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Временные файлы
+_tmp_*
+_ocr_*
+*.bak_*
+
+# Среда/редакторы
+.vscode/
+.idea/
+*.swp

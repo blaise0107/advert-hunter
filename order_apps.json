@@ -1,0 +1,128 @@
+{
+  "833306": {
+    "package": "com.zaim.na.kartu.Lamb",
+    "component": "com.zaim.na.kartu.Lamb/com.vsezaimyonline.ui.screens.enter.EnterActivity",
+    "query": "Lamb",
+    "at": "2026-11-06T16:16:27",
+    "icon": "00a205910b5a019e04b20190234d919311923390c35f55930190033003770193"
+  },
+  "1413107": {
+    "package": "com.zaimi.na.kartu.Henry",
+    "component": "com.zaimi.na.kartu.Henry/com.zaim.kartu.ui.activity.splash.SplashActivity",
+    "query": "Henry",
+    "at": "2026-11-07T10:49:00",
+    "icon": "a71a90e2a71ace0c9026a1926e4a6d69654d494969aaa2529026cf0ca71a90e2"
+  },
+  "1355325": {
+    "package": "com.next.foot.sport.mob",
+    "component": "com.next.foot.sport.mob/com.nextfoot.MainActivity",
+    "query": "mob",
+    "at": "2026-11-08T17:43:55",
+    "icon": "a042a1a2a64ab872b03aa6daa4da849aa23aa1f2b982aaaa8a7a8cdab122a8d2"
+  },
+  "1410517": {
+    "package": "com.zaymigo.zaymigo_loans",
+    "component": "com.zaymigo.zaymigo_loans/com.zaymigo.zaymigo_loans.MainActivity",
+    "query": "zaymigo_loans",
+    "at": "2026-11-08T17:18:26",
+    "icon": "086106812d89594979490d81728979810ee10e61798170811e4126b110010401"
+  },
+  "1409790": {
+    "package": "com.zaim.na.kartu.Colombo",
+    "component": "com.zaim.na.kartu.Colombo/ru.greenlexhope.loan.ui.enter.EnterActivity",
+    "query": "Colombo",
+    "at": "2026-11-06T14:25:00",
+    "icon": "a842a32ab4d2a96aa92aa96aa9d2a9d2b4aaae729212924e96b29dbaa252b882"
+  },
+  "1425812": {
+    "package": "com.brenloris.sports.goalframe",
+    "component": "com.brenloris.sports.goalframe/com.brenloris.sports.goalframe.MainActivity",
+    "query": "goalframe",
+    "at": "2026-11-06T14:33:46",
+    "icon": "8002a002a002a0028d2aa2d6cd2a8d6aab6ea84aacd8d322ac42a002a002a002"
+  },
+  "1354084": {
+    "package": "com.winline.delaet.raznicu.sport.stavki.gp.app",
+    "component": "com.winline.delaet.raznicu.sport.stavki.gp.app/com.winline.delaet.raznicu.sport.stavki.gp.app.MainActivity",
+    "query": "winline",
+    "at": "2026-11-06T14:37:31",
+    "icon": "8c42af22a3d2bceac16a9a92356c656d62a765aa65aaba568daaa66a9dcaa392"
+  },
+  "1428895": {
+    "package": "com.olimpbk.app.bet",
+    "component": "com.olimpbk.app.bet/com.work.app.uiCore.base.MainActivity",
+    "query": "bet",
+    "at": "2026-11-06T14:51:55",
+    "icon": "8002a332acca9332a73a8e9e9d469a269a269a2e9cc6860ec33ea0fa9cc2a332"
+  },
+  "1444621": {
+    "package": "ru.vozmika",
+    "component": "ru.vozmika/ru.vozmika.MainActivity",
+    "query": "vozmika",
+    "at": "2026-11-06T15:11:54",
+    "icon": null
+  },
+  "1359127": {
+    "package": "com.fonbet.all.sport.and.stavki.app",
+    "component": "com.fonbet.all.sport.and.stavki.app/com.fonbet.all.sport.and.app.presentation.activity.MainActivity",
+    "query": "fonbet",
+    "at": "2026-11-06T15:42:22",
+    "icon": "0228b1d63552b4531494b221b932b2c41089b319abadb3721252b319a9acb374"
+  },
+  "1430506": {
+    "package": "com.zaim.online.bezotkaza",
+    "component": "com.zaim.online.bezotkaza/com.noty.loans.ui.screens.enter.StartActivity",
+    "query": "bezotkaza",
+    "at": "2026-11-08T17:35:15",
+    "icon": "086023095c8530f3611948edc1049514956c929cc00448ed601930f35e852309"
+  },
+  "1425509": {
+    "package": "com.zaimi.do.zp.finance",
+    "component": "com.zaimi.do.zp.finance/com.online.zaim.ui.enter.StartActivity",
+    "query": "finance",
+    "at": "2026-11-07T10:43:20",
+    "icon": "00a205910b5a019e04b20190234d919310903510c37751930190031003770193"
+  },
+  "1422132": {
+    "package": "com.zaim.na.kartu.officialtechdock",
+    "component": "com.zaim.na.kartu.officialtechdock/com.online.zaim.nakartu.ui.StartActivity",
+    "query": "officialtechdock",
+    "at": "2026-11-07T10:46:11",
+    "icon": "80028002800280028226a1dab45a9526ba4ed012a55aa54a9a82800280028002"
+  },
+  "1395670": {
+    "package": "com.fonbet.sport.app",
+    "component": "com.fonbet.sport.app/com.fonbet.sport.app.MainActivity",
+    "query": "fonbet",
+    "at": "2026-11-08T17:43:22",
+    "icon": "a002a002a70aa8169016a00685aecb42cb5a8a5a881a96b296828c928d022d02"
+  },
+  "1069571": {
+    "package": "ru.letu",
+    "component": "ru.letu/ru.letu.navigation.base.MainActivity",
+    "query": "letu",
+    "at": "2026-11-08T17:44:26",
+    "icon": "a002a002a002a002a042af02b0fae8f079d8970e8e86b172a002a002a002a002"
+  },
+  "1431297": {
+    "package": "com.yandex.bank",
+    "component": "com.yandex.bank/com.yb.screens.MainActivityDefault",
+    "query": "bank",
+    "at": "2026-11-08T17:46:10",
+    "icon": "6c03f7f8fffcf1f8fff8fe5ab1a68646ca5292569756b59ea5a29a1ad484e808"
+  },
+  "1395363": {
+    "package": "ru.ezaem.dozp.fast",
+    "component": "ru.ezaem.dozp.fast/ru.ezaem.dozp.fast.MainActivity",
+    "query": "fast",
+    "at": "2026-11-07T12:30:38",
+    "icon": "03a2032e05912399239e919c1591b39cc3931591019203350353019200680000"
+  },
+  "1341301": {
+    "package": "com.wallbeststore.cat",
+    "component": "com.wallbeststore.cat/app.dengi.vdolg.debt.loan.debtloanonline.MainActivity",
+    "query": "cat",
+    "at": "2026-11-08T17:45:35",
+    "icon": "00010001000160c1020561e16cd16c99669966996c9971e30005249100010001"
+  }
+}
