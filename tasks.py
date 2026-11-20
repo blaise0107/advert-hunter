@@ -488,59 +488,31 @@ class ActiveCards(list):
 NAV_PAGE_TIMEOUT = 75
 
 
-def page_buttons(a):
-    """Кнопки страниц «1 2 …» у списка заказов: [(x, y, яркость)].
+from core import shared as _shared
 
-    В «Активных» и «Новых» список разбит на страницы по 20 заказов.
-    Кнопки — цветные квадраты под заголовком; когда список прокручен
-    до конца, такие же квадраты видны внизу. Выбранная страница темнее.
-    """
-    if a is None:
-        return []
-    bands = ((280, 420), (2090, 2230))
-    for y0, y1 in bands:
-        band = a[y0:y1]
-        if band.size == 0:
-            continue
-        spread = band.max(axis=2).astype(int) - band.min(axis=2).astype(int)
-        bright = band.max(axis=2)
-        mask = (spread > 45) & (bright > 100)
-        columns = np.flatnonzero(mask.sum(axis=0) >= 15)
-        if not len(columns):
-            continue
-        found = []
-        groups = np.split(columns, np.flatnonzero(np.diff(columns) > 4) + 1)
-        for group in groups:
-            left, right = int(group[0]), int(group[-1]) + 1
-            width = right - left
-            if not 55 <= width <= 95:
-                continue
-            # Квадраты страниц — по центру списка; иконки заданий слева.
-            if not 400 <= left + width // 2 <= 700:
-                continue
-            sub = mask[:, left:right]
-            rows = np.flatnonzero(sub.sum(axis=1) >= 10)
-            if not len(rows):
-                continue
-            height = int(rows[-1]) - int(rows[0]) + 1
-            if not 55 <= height <= 95:
-                continue
-            zone = band[rows[0]:rows[-1] + 1, left:right]
-            found.append((left + width // 2, y0 + int((rows[0] + rows[-1]) // 2),
-                          round(float(zone.mean()), 1)))
-        if found:
-            found.sort(key=lambda b: b[0])
-            return found[:6]
-    return []
+def page_buttons(a):
+    return _shared.page_buttons(a)
 
 
 def page_state(a):
-    """(текущая страница, всего страниц). Текущая — самый тёмный квадрат."""
-    buttons = page_buttons(a)
-    if not buttons:
-        return 1, 1
-    dark = min(buttons, key=lambda b: b[2])
-    return buttons.index(dark) + 1, len(buttons)
+    return _shared.page_state(_shared.page_buttons(a))
+
+
+def extract_search_query(text):
+    return _shared.extract_search_query(text)
+
+
+def third_party_packages():
+    return _shared.third_party_packages(h.adb)
+
+
+def go_to_page(target, timeout=NAV_PAGE_TIMEOUT):
+    return _shared.go_to_page(target, timeout, dev=h,
+        screen_ok=is_active_screen,
+        scroll_when=lambda top, target: not top)
+
+
+
 
 
 def is_active_screen(kind, a):
@@ -557,35 +529,6 @@ def is_active_screen(kind, a):
     return kind in ("active", "list") or (a is not None and h.active_header(a))
 
 
-def go_to_page(target, timeout=NAV_PAGE_TIMEOUT):
-    """Переключает список на нужную страницу. Возвращает успех.
-
-    Верхние квадраты страниц (y≈342) — настоящие кнопки; такие же квадраты
-    внизу (y≈2198) индикаторные, тапы по ним страницу не меняют. Поэтому
-    сначала длинными свайпами прокручиваем список к началу, затем жмём
-    верхний квадрат. После нажатия список грузится 2–3 с, поэтому не
-    сдаёмся по первому же кадру.
-    """
-    end = time.monotonic() + timeout
-    last_tap = 0.0
-    last_scroll = 0.0
-    while time.monotonic() < end:
-        kind, a, path, lines = h.read_screen("pg.png")
-        if is_active_screen(kind, a):
-            current, total = page_state(a)
-            if current == target:
-                return True
-            buttons = page_buttons(a)
-            top = [b for b in buttons if b[1] < 1000]
-            if target <= len(top) and time.monotonic() - last_tap > 2.5:
-                h.tap(top[target - 1][0], top[target - 1][1])
-                last_tap = time.monotonic()
-            elif not top and time.monotonic() - last_scroll > 0.8:
-                # Свайп вниз по экрану прокручивает список к началу.
-                h.swipe(540, 450, 540, 2000, 600)
-                last_scroll = time.monotonic()
-        time.sleep(0.5)
-    return False
 
 
 def scan_active(max_pages=None):
@@ -1254,33 +1197,8 @@ def install_from_store(pkg, store):
     return False
 
 
-def third_party_packages():
-    out = h.adb("shell", "pm list packages -3").stdout.decode("utf-8", "replace")
-    return [line.split(":", 1)[1].strip() for line in out.splitlines()
-            if line.startswith("package:")]
 
 
-def extract_search_query(text):
-    """Достаёт поисковый запрос из инструкции «Зайдите в Google Play»."""
-    text = h.norm(text)
-    parts = [part.strip(" .:—-") for part in re.split(r"[|\n]", text)]
-    for i, part in enumerate(parts):
-        if "поисков" in part and "запрос" in part:
-            tail = re.sub(r"^.*?запрос\w*\s*[:：]?\s*", "", part)
-            if tail and not tail.startswith(("скопир", "ваше", "зайд")):
-                return tail
-            for nxt in parts[i + 1:]:
-                if not nxt or nxt.startswith(
-                        ("скопир", "ваше", "зайд", "из буфера")):
-                    continue
-                return nxt
-    match = re.search(
-        r"поисков\w*\s+запрос\w*[^a-z0-9]{0,14}([a-z0-9][a-z0-9_.\-]{1,30})",
-        text)
-    if match:
-        return match.group(1).strip(" .-")
-    match = re.search(r"встав\w*[^a-z0-9]{0,20}([a-z0-9][a-z0-9_.\-]{1,30})", text)
-    return match.group(1).strip(" .-") if match else None
 
 
 def install_by_search(order, text, a=None, lines=None, bar=None):
