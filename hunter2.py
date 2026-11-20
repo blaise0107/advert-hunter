@@ -2568,12 +2568,23 @@ def uninstall_backoff_key(text):
     """
     m = re.search(r"удалит\w*\s+приложение\s*[«<]\s*(.+?)\s*[»>]", text, re.S)
     name = re.sub(r"\s*\|\s*", " ", m.group(1)).strip(" |") if m else ""
-    # OCR-устойчивость: если имя обрезано/с латинской 'c' ('Яндекc'), один и
-    # тот же заказ даст разные ключи и шторм возродится через запасные имена.
-    # Добавляем стабильный отпечаток по началу всего нормализованного текста.
-    stable = re.sub(r"\s+", " ", norm(text)).strip()[:50]
-    head = norm(name)[:30] if name else ""
-    return "uninstall:" + (head + "|" + stable if head else stable)
+
+    def _stable(s):
+        # OCR часто подменяет кириллические буквы латинскими ('Яндекc' вместо
+        # 'Яндекс'). Приводим основный визуально-одинаковые пары к кириллице,
+        # иначе один и тот же заказ плодит разные ключи и шторм возвращается.
+        s = norm(s)
+        for lat, cyr in (("c", "с"), ("C", "с"), ("e", "е"), ("o", "о"),
+                         ("p", "р"), ("x", "х"), ("y", "у"), ("a", "а")):
+            s = s.replace(lat, cyr)
+        s = re.sub(r"[^а-яa-z0-9]+", "", s)  # только буквы/цифры, без «» и хвоста
+        return s[:30]
+
+    # Ключ — по ИМЕНИ приложения, без хвоста фразы («с вашего устройства»
+    # против «с вашего» не должен менять ключ). Fallback — по началу текста.
+    head = _stable(name) if name else ""
+    stable = _stable(text) if not name else ""
+    return "uninstall:" + (head if head else stable)
 
 
 def handle_dialog(order, a, path, stage, navigation=False):

@@ -1189,3 +1189,48 @@ AdvertApp через роутер: приложение не успевало о
 - Лог: «выполнено за проход: 4» (Realme 04:38), «выполнено за проход: 2; очередь: pending=3» (Samsung 04:42).
 - Итого за 1.5 ч: 9 заданий выполнено. «Отложено на 15 мин» — заказы со сроком >24 ч, ожидаемо.
 - Перехват протокола признан невозможным без риска бана (см. п.36); работаем на OCR + косвенных признаках.
+
+
+### 38. Аудит кода с Qwen 4 MAX и чистка (20.11.2026, 17:00–18:30)
+
+Проект выложен на GitHub (public, `blaise0107/advert-hunter`) и разобран
+внешней моделью Qwen 4 MAX. Серия правок, запушенных коммитами
+`4bbace6 → 91ee5d5 → 8a0e587 → 0b376c4 → 4bb0796 → e04ba4e → 652d088 →
+4aabaa5 → 342d056 → 4886097`:
+
+- Баг `in_rush` (undefined name) в `hunter2.py` — падение при запуске без
+  `--refresh-seconds`. Исправлено через окно rush из конфига.
+- Зашитый `SERIAL="fab1701"` → `HUNTER_SERIAL` / автодетект одного устройства;
+  ADB через `ADB_EXE`. Путь и геометрия в конфиге окружения.
+- pyflakes: 0 undefined names. Удалены мёртвый `_CLOSE_FAILS`, `global
+  LAST_HELD_PKG` (read-only), `_Root` заменён на `pathlib.Path` в tools/
+  (ваariant Qwen `os.path.dirname` ломал `.resolve()`), `norm` в dump_hdr
+  поднят выше использования.
+- Дедупликация: 5 функций перенесены в `core/shared.py` с параметризацией
+  различий (предикаты `screen_ok`/`scroll_when`), обёртки в hunter2/tasks.
+  Найден и исправлен баг в AST-скрипте Qwen: `end = time.monotonic()` без
+  `+ timeout` — пагинация всегда возвращала False. Тесты 7/7 + регресс-
+  тест `uninstall_backoff_key` (10/10).
+- Состояние (results/seen/order_blacklist и др.) убрано из git-индекса,
+  `.gitignore` + `.gitattributes` (`* text=auto eol=lf`) — LF не разъезжается.
+- `requirements.txt` / `requirements-ocr.txt`, fallback `compression.zstd →
+  zstandard`, README (pywinauto → PyQt6, флаги confirm_unknown/ЧС).
+- **Uninstall retry-шторм**: 429 `uninstall_failed` из 235+617 записей,
+  393 — однотипные «удалите Яндекс» (`unprompted`) без backoff. Введен
+  `uninstall_backoff_key()` с OCR-устойчивым отпечатком (латинская `c`,
+  обрезка имени не плодят новые ключи), запись в ЧС на 5 мин и закрытие
+  модалки при backoff-пропуске. По алиасам НЕ удаляем (слишком широко);
+  provenance `known_apps.orders[1431597] → com.TNITYStudio.BWCasino`
+  подтверждён писателем `remember_order()` (install-путь).
+- **Отложено до включения фермы** (по рекомендации Qwen, требует живого
+  экрана): (2) lost для заasted uninstall-заказа — только в uninstall-ветке
+  `do_task`, после ≥2 полных проходов, через существующий work_queue-путь;
+  (3) строгое совпадение по `known_apps.orders` с guard «пакет не в
+  used/pending и скан полный»; подтверждение `unknown` (`confirm_active`)
+  под флагом `false` и v2 — не строить спекулятивно.
+- Данные: `unknown` 17/(617−429) ≈ 9% (не 3% — разные совокупности);
+  `uninstall_failed` 70% — главная проблема, теперь под ChS.
+
+Ферма остановлена 17:25 по просьбе пользователя; мониторинг приостановлен.
+Collaboration с Qwen по uninstall_failed закрыта: дальше — supervised цикл
+на 1431597 и ночь с `confirm_unknown=true`, результат покажет `stats.py`.
