@@ -3,10 +3,34 @@ import io
 import sys
 import tarfile
 
-import compression.zstd as z
+# Python 3.14 даёт stdlib-модуль compression.zstd; на более старых версиях
+# используется сторонняя библиотека zstandard (pip install zstandard).
+# Оба варианта приводятся к одному интерфейсу get_frame_size()/decompress().
+try:
+    import compression.zstd as z
+except ImportError:
+    try:
+        import zstandard as _zstd
+
+        class _ZstdCompat:
+            @staticmethod
+            def get_frame_size(data):
+                info = _zstd.get_frame_info(data)
+                return info.frame_content_size if 0 < info.frame_content_size < 1 << 40 else 0
+
+            @staticmethod
+            def decompress(data):
+                return _zstd.ZstdDecompressor().decompress(data, max_output_size=1 << 30)
+
+        z = _ZstdCompat()
+    except ImportError:
+        z = None
 
 
 def extract(path, outdir):
+    if z is None:
+        raise RuntimeError(
+            "Нужен zstd: Python 3.14 (compression.zstd) или pip install zstandard")
     d = open(path, "rb").read()
     found = []
 

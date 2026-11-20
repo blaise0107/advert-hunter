@@ -1,0 +1,12 @@
+# Основные зависимости фермы AdvertApp Hunter
+# Установка: py -m pip install -r requirements.txt
+pillow>=10.0
+numpy>=1.24
+PyQt6>=6.5
+PyQt6-Fluent-Widgets>=1.5
+# zstd: на Python 3.14 встроен (compression.zstd), на более старых — fallback
+zstandard>=0.22; python_version < "3.14"
+
+# Дополнительные зависимости для OCR см. requirements-ocr.txt
+# (RapidOCR запускается в отдельном venv .venv-ocr, чтобы не конфликтовать
+#  с основным окружением по версиям onnxruntime/numpy)

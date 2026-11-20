@@ -12,8 +12,22 @@ backups/
 # Состояние фермы и служебные файлы
 farm_status.json
 last_cleanup.txt
+hunter.stop
 *.out
 *.log
+
+# Рабочее состояние и результаты (не исходники — меняется во время работы).
+# При клоне на другой ПК ферма должна стартовать с чистого листа.
+results.jsonl
+seen_orders.json
+order_blacklist.json
+new_taken.json
+done_recent.json
+backup_packages.json
+display.json
+known_apps.json
+order_apps.json
+panel_apps.json
 
 # Python
 __pycache__/

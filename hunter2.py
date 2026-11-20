@@ -34,7 +34,26 @@ except Exception:
     pass
 
 ADB = os.environ.get("ADB_EXE", r"C:\Users\RZE\AppData\Local\Android\Sdk\platform-tools\adb.exe")
-SERIAL = "fab1701"
+# Устройство по умолчанию: из окружения HUNTER_SERIAL, иначе автодетект,
+# если подключено ровно одно. Ферма всё равно вызывает configure_device(serial)
+# для каждого воркера, но одиночный запуск теперь не привязан к «fab1701».
+def _default_serial():
+    env = os.environ.get("HUNTER_SERIAL", "").strip()
+    if env:
+        return env
+    try:
+        out = subprocess.run([ADB, "devices"], capture_output=True,
+                             timeout=8).stdout.decode("utf-8", "ignore")
+        serials = [line.split()[0] for line in out.splitlines()
+                   if line.strip().endswith("\tdevice")]
+        if len(serials) == 1:
+            return serials[0]
+    except Exception:
+        pass
+    return ""
+
+
+SERIAL = _default_serial()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGS_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOGS_DIR, exist_ok=True)
@@ -3035,6 +3054,11 @@ def run(start_at=None, end_at=None, *, duration=600, dry_run=False, refresh_seco
                     last_refresh = time.monotonic()
             continue
 
+        # in_rush раньше не определялся → NameError при запуске без
+        # --refresh-seconds. Основание берём из уже вычисленного окна rush,
+        # а не из зашитого часа: границы приходят из rush_window(start).
+        _now_t = datetime.now().time()
+        in_rush = rush_start.time() <= _now_t <= rush_end.time()
         interval = refresh_seconds if refresh_seconds is not None else (REFRESH_SECONDS if in_rush else 25.0)
         if now - last_refresh >= interval:
             begin = time.monotonic()

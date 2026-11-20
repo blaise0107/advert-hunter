@@ -165,7 +165,9 @@ python .\hunter2.py --stop
 
 ## Зависимости для запуска
 
-- Python 3.10+ (основной код): `pillow`, `numpy`, `pywinauto` (для панели).
+- Python 3.10+ (основной код): `pillow`, `numpy` — см. `requirements.txt`.
+- Графическая панель: `PyQt6`, `PyQt6-Fluent-Widgets` (не `pywinauto`).
+- RapidOCR (опционально): `requirements-ocr.txt` и отдельное venv `.venv-ocr`.
 - Для RapidOCR: отдельное окружение с `rapidocr`, `rapidocr_onnxruntime`,
   `onnxruntime`, `opencv-python` (модели скачиваются при первом запуске).
 - ADB из Android SDK, телефон с USB-отладкой и разблокированным экраном.
