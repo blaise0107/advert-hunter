@@ -2560,6 +2560,17 @@ def confirm_after_install(order, pkg):
     return confirmed
 
 
+def uninstall_backoff_key(text):
+    """Ключ ЧС для uninstall-модалки — по названию приложения.
+
+    Зацыкленную модалку «удалите Яндекс» не дёргаем 400 раз подряд:
+    один отпечаток на все одинаковые окна, TTL задаёт вызывающий.
+    """
+    m = re.search(r"удалит\w*\s+приложение\s*[«<]\s*(.+?)\s*[»>]", text, re.S)
+    name = re.sub(r"\s*\|\s*", " ", m.group(1)).strip(" |") if m else "?"
+    return "uninstall:" + norm(name)[:60]
+
+
 def handle_dialog(order, a, path, stage, navigation=False):
     log(f"handle_dialog: order={order} stage={stage}")
     lines = modal_lines(a, path)
@@ -2573,8 +2584,16 @@ def handle_dialog(order, a, path, stage, navigation=False):
             record_result(order, result, text, path, stage)
             log(f"handle_dialog done: order={order} status={result} text={text!r}")
             if result == "uninstall_failed":
-                # Пакет не найден/не удалён — подтверждать нечего. Если оставить
-                # окно открытым, MODAL_PUMP будет разбирать его бесконечно.
+                # Retry-шторм: 409 одинаковых «удалите Яндекс» подряд без backoff.
+                # Кладём короткий ЧС по отпечатку, чтобы MODAL_PUMP не дёргал
+                # ту же модалку снова в этом и следующих проходах.
+                key = uninstall_backoff_key(text)
+                if _order_blacklist is not None and key:
+                    try:
+                        _order_blacklist.add(key, minutes=5, reason="uninstall_failed")
+                        log(f"ЧС uninstall: {key} на 5 мин")
+                    except Exception as error:  # noqa: BLE001
+                        log(f"ЧС uninstall: не удалось сохранить: {error!r}")
                 close_modal(a, lines)
             return result
     if kind == "not_enough_time":

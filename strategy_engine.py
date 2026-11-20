@@ -314,6 +314,13 @@ def modal_pump():
         log("modal_pump: главное меню, не модалка — пропускаю")
         return ""
     text = " | ".join(line.get("text", "") for line in (h.modal_lines(a, path) or lines))
+    # Uninstall-модалки, что уже дали uninstall_failed, уходят в ЧС на 5 мин.
+    # Не дёргаем их снова — это давало 409 одинаковых записей подряд.
+    if h._order_blacklist is not None:
+        key = h.uninstall_backoff_key(text)
+        if key and key in h._order_blacklist.active_ids():
+            log(f"модалка в ЧС ({key}) — пропускаю")
+            return "uninstall_failed"
     try:
         status = h.handle_dialog("unprompted", a, path, "navigation", navigation=True)
         log(f"модалка: {status} — {text[:120]}")
