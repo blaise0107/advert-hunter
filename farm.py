@@ -172,6 +172,10 @@ class Farm:
         self.last_started: dict[str, float] = {}
         self.next_attempt: dict[str, float] = {}
         self.online: dict[str, object] = {}
+        # Защита от ложного «отключилось»: adb devices иногда разово
+        # возвращает пустой список. Останавливаем воркера только после
+        # двух подряд провалов discovery, а не по одному опросу.
+        self._discover_misses = 0
 
     @staticmethod
     def _deadline(text: str) -> datetime:
@@ -190,7 +194,22 @@ class Farm:
             items = devices.list_devices()
         except Exception as error:
             log(f"adb devices: {error!r}")
-            return []
+            self._discover_misses += 1
+            if self._discover_misses >= 2:
+                # Два подряд провала — похоже, adb реально недоступен.
+                return []
+            # Один разовый сбой: возвращаем последний известный список,
+            # чтобы не убивать воркеров на простом чихе adb.
+            return [item for item in self.online.values()
+                    if item.online and item.serial not in self.disabled]
+        if not items and self.online:
+            # adb devices вернул пустой список без исключения — тоже считаем
+            # разовым провалом и держим последний известный список.
+            self._discover_misses += 1
+            if self._discover_misses < 2:
+                return [item for item in self.online.values()
+                        if item.online and item.serial not in self.disabled]
+        self._discover_misses = 0
         self.online = {item.serial: item for item in items if item.online}
         return [item for item in items if item.online and item.serial not in self.disabled]
 
