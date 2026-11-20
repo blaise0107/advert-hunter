@@ -1,3 +1,4 @@
+_Root = __import__("pathlib").Path  # Qwen: базовая директория для путей tools/
 import subprocess, time
 from PIL import Image
 ADB = r"C:\Users\RZE\AppData\Local\Android\Sdk\platform-tools\adb.exe"; S="fab1701"

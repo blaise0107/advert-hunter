@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np, sys
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
+_Root = __import__("pathlib").Path  # Qwen: базовая директория для путей tools/
 import hunter2 as h
 
 im = Image.open(str(_Root(__file__).resolve().parents[1] / 'shots') + r"\d480_list.png").convert("RGB")

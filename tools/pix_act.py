@@ -1,3 +1,4 @@
+_Root = __import__("pathlib").Path  # Qwen: базовая директория для путей tools/
 from PIL import Image
 import numpy as np
 im = Image.open(str(_Root(__file__).resolve().parents[1] / 'shots') + r"\act_detail.png").convert("RGB")

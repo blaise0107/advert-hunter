@@ -724,10 +724,8 @@ def close_modal(a, lines=None):
                                 start_app()
                             except Exception:
                                 pass
-                        _CLOSE_FAILS = 0
                         return False
                     time.sleep(0.2)
-                    _CLOSE_FAILS = 0
                     return True
     # Неизвестное окно AdvertApp (реклама/«смена аккаунта») часто не имеет
     # текстовой кнопки: BACK его не закрывает, а тап по ✕/вне окна только
@@ -742,7 +740,6 @@ def close_modal(a, lines=None):
             start_app()
         except Exception:
             pass
-    _CLOSE_FAILS = 0
     return False
 
 

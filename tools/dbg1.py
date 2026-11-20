@@ -1,5 +1,6 @@
 import sys, json
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
+_Root = __import__("pathlib").Path  # Qwen: базовая директория для путей tools/
 import hunter2 as h
 import numpy as np
 from PIL import Image

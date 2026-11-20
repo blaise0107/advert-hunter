@@ -1,5 +1,6 @@
 import sys, time
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
+_Root = __import__("pathlib").Path  # Qwen: базовая директория для путей tools/
 import hunter2 as h
 p = str(_Root(__file__).resolve().parents[1] / 'shots') + r"\after_ok.png"
 t0 = time.time()
