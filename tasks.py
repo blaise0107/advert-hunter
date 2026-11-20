@@ -902,7 +902,11 @@ def locate(order, max_pages=None):
             if not is_active_screen(kind, a):
                 return None
             for card in active_cards(a, lines):
-                if h.order_matches(order, card["order"]):
+                # order_matches слишком либерален (tolerance=2 по префиксу):
+                # 1359127 и 1359187 — РАЗНЫЕ заказы, но он их сливал, и бот
+                # открывал чужой заказ. Берём только точный номер или потерю
+                # цифры в начале (same_order: 1444292 -> 444292).
+                if card["order"] == order or h.same_order(order, card["order"]):
                     # Карточка у нижнего края перекрыта меню — поднимаем её,
                     # иначе тап попадает в нижнюю навигацию, а не в заказ.
                     for lift in range(3):
@@ -915,7 +919,8 @@ def locate(order, max_pages=None):
                         if not is_active_screen(kind, a):
                             return None
                         found = next((c for c in active_cards(a, lines)
-                                      if h.order_matches(order, c["order"])), None)
+                                      if c["order"] == order
+                                      or h.same_order(order, c["order"])), None)
                         if found is None:
                             return None
                         card = found
