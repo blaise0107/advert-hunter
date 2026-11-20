@@ -319,7 +319,13 @@ def modal_pump():
     if h._order_blacklist is not None:
         key = h.uninstall_backoff_key(text)
         if key and key in h._order_blacklist.active_ids():
-            log(f"модалка в ЧС ({key}) — пропускаю")
+            # Важно: пропуск НЕ равен закрытию. Если просто вернуться, модалка
+            # «удалите Яндекс» останется на экране и ферма встанет за ней.
+            log(f"модалка в ЧС ({key}) — закрываю и пропускаю")
+            try:
+                h.close_modal(a, h.modal_lines(a, path))
+            except Exception as exc:  # noqa: BLE001 - закрытие не должно ронять pump
+                log(f"модалка в ЧС: не закрылась ({exc!r})")
             return "uninstall_failed"
     try:
         status = h.handle_dialog("unprompted", a, path, "navigation", navigation=True)

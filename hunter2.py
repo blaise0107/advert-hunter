@@ -2567,8 +2567,13 @@ def uninstall_backoff_key(text):
     один отпечаток на все одинаковые окна, TTL задаёт вызывающий.
     """
     m = re.search(r"удалит\w*\s+приложение\s*[«<]\s*(.+?)\s*[»>]", text, re.S)
-    name = re.sub(r"\s*\|\s*", " ", m.group(1)).strip(" |") if m else "?"
-    return "uninstall:" + norm(name)[:60]
+    name = re.sub(r"\s*\|\s*", " ", m.group(1)).strip(" |") if m else ""
+    # OCR-устойчивость: если имя обрезано/с латинской 'c' ('Яндекc'), один и
+    # тот же заказ даст разные ключи и шторм возродится через запасные имена.
+    # Добавляем стабильный отпечаток по началу всего нормализованного текста.
+    stable = re.sub(r"\s+", " ", norm(text)).strip()[:50]
+    head = norm(name)[:30] if name else ""
+    return "uninstall:" + (head + "|" + stable if head else stable)
 
 
 def handle_dialog(order, a, path, stage, navigation=False):
