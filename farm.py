@@ -176,6 +176,9 @@ class Farm:
         # возвращает пустой список. Останавливаем воркера только после
         # двух подряд провалов discovery, а не по одному опросу.
         self._discover_misses = 0
+        # Per-serial счётчик пропаж: одно устройство может "чихнуть" в adb,
+        # пока другое видно. Не останавливаем воркера после одной пропажи.
+        self._missing_serial_counts = {}
 
     @staticmethod
     def _deadline(text: str) -> datetime:
@@ -202,16 +205,27 @@ class Farm:
             # чтобы не убивать воркеров на простом чихе adb.
             return [item for item in self.online.values()
                     if item.online and item.serial not in self.disabled]
-        if not items and self.online:
-            # adb devices вернул пустой список без исключения — тоже считаем
-            # разовым провалом и держим последний известный список.
-            self._discover_misses += 1
-            if self._discover_misses < 2:
-                return [item for item in self.online.values()
-                        if item.online and item.serial not in self.disabled]
-        self._discover_misses = 0
-        self.online = {item.serial: item for item in items if item.online}
-        return [item for item in items if item.online and item.serial not in self.disabled]
+        seen = {item.serial for item in items if item.online}
+        # Per-serial защита от одиночного "чиха" adb: если известное устройство
+        # пропало из adb впервые — держим его в списке ещё один цикл. Только
+        # две подряд пропажи считаются реальным отключением (иначе воркер
+        # останавливался после первого же partial-loss, пока другое устройство
+        # оставалось видимым — баг приводил к простою Samsung по 20+ минут).
+        kept = []
+        for serial, item in list(self.online.items()):
+            if serial in seen:
+                self._missing_serial_counts.pop(serial, None)
+                continue
+            misses = self._missing_serial_counts.get(serial, 0) + 1
+            self._missing_serial_counts[serial] = misses
+            if misses < 2 and serial not in self.disabled:
+                kept.append(item)
+        if items or self._discover_misses == 0:
+            self._discover_misses = 0
+        merged = list(items) + [item for item in kept
+                                if item.serial not in seen]
+        self.online = {item.serial: item for item in merged if item.online}
+        return [item for item in merged if item.online and item.serial not in self.disabled]
 
     def start_worker(self, serial: str, slot: int) -> None:
         rd = run_dir(serial)
