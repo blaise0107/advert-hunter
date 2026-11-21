@@ -567,15 +567,13 @@ def execute_active(max_tasks=0, only_due=False):
             if signature in handled.get(order, ()):
                 continue
             actionable.append(card)
-        # Отложенные по сроку/ошибке заказы не трогаем 15 минут.
+        # ПО ПРАВИЛУ ПОЛЬЗОВАТЕЛЯ: зелёная подпись в «Активных» = выполнять
+        # НЕМЕДЛЕННО, без отложенных таймеров. Раньше здесь actionable-заказы
+        # отсекались по skipped TTL (15 мин) и done_cooldown (40 мин), из-за чего
+        # готовый зелёный шаг «пролистывался». Теперь задержки не применяются к
+        # заказам с зелёной подписью — они всегда идут в работу сразу.
         skipped = skipped_load()
-        done_recent = done_load()
         now_wall = time.time()
-        actionable = [c for c in actionable
-                      if now_wall - skipped.get(str(c["order"]), 0) >= SKIPPED_TTL]
-        done_ttl = int(load_settings().get("strategy", {}).get("done_cooldown_minutes", 40) or 0) * 60
-        actionable = [c for c in actionable
-                      if not done_ttl or now_wall - done_recent.get(str(c["order"]), 0) >= done_ttl]
         log(f"активных {len(cards)}, зелёных шагов {len(actionable)} "
             f"(отложено {sum(1 for k, v in skipped.items() if now_wall - v < SKIPPED_TTL)})")
         if not actionable:
